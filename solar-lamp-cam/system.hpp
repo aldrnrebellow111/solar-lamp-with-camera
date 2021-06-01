@@ -29,7 +29,7 @@
 #define DEFAULT_PASSKEY "DEFAULT PASSWORD"
 #define DEFAULT_DATE    "DD_MM_YYYY"
 #define DEFAULT_TIME    "HH_MM_SS"
-#define DEFAULT_CONN_DATA_FILE_VALUES "{\"SSID\":\"Aldrin\",\"Password\":\"1351824120\",\"ContinousPicEnable\":\"1\",\"ContinousPicintervel\":\"10\"}"
+#define DEFAULT_CONN_DATA_FILE_VALUES "{\"SSID\":\"ssid\",\"Password\":\"pass\",\"ContinousPicEnable\":\"1\",\"ContinousPicintervel\":\"10\"}"
 
 #define CAMERA_DEFAULT_DELAY      500//MS
 #define MAX_BRUST_PHOTO_COUNT     3//Number of photos
@@ -39,7 +39,7 @@
 
 #define PIN_LED_FLASH  4
 #define PIN_PIR_DETECT 16
-#define MAX_PIR_DETECT_COUNT 100000
+#define MAX_PIR_DETECT_COUNT 5
 
 #define MAX_SIZE_OF_CONNECTION_FILE   128
 #define CONFIG_FILE_NAME  "/Config.bin"

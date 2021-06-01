@@ -265,7 +265,7 @@ void InitializaAllGpio(void)
 {
   pinMode(PIN_LED_FLASH, OUTPUT);
   digitalWrite(PIN_LED_FLASH, LOW);
-  pinMode(PIN_PIR_DETECT,INPUT_PULLUP);  
+  pinMode(PIN_PIR_DETECT,INPUT);  
 }
 bool TimerCallbackTimerNormal(void *)
 {
@@ -302,13 +302,13 @@ bool TimerCallbackTimerTimerBrust(void *)
 bool checkforpirdetect(void)
 {
   bool bRet = false;
-  static bool bPrevStatus = false;
+  static int bPrevStatus = false;
   int nPinStatus = digitalRead(PIN_PIR_DETECT);
   if(nPinStatus && false == bPrevStatus)
   {
     g_bPirDetected = bRet = true;
   }
-  bPrevStatus = bRet;
+  bPrevStatus = nPinStatus;
 }
 void setup() 
 {
