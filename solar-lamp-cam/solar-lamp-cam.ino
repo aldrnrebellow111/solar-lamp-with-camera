@@ -30,14 +30,6 @@ char e_arr_cPassKey[LENGTH_OF_SSID_PASS] = {0};
 volatile uint32_t g_u_n32DebounceTimer = 0;
 bool g_bPirDetected = false;
 
-void IRAM_ATTR IsrPirDetect(void)
-{
-  if ( (millis() - DEBOUNCE_TIME  >= g_u_n32DebounceTimer ))
-  {
-    g_bPirDetected = true;
-    Serial.println("ISR - PIR detected");
-  }
-}
 bool configCamera(void)
 {
    config.ledc_channel = LEDC_CHANNEL_0;
@@ -160,6 +152,7 @@ bool SnapPhoto(void)
     bRet = false;
   }
   esp_camera_fb_return(ptrCamera); 
+  delay(CAMERA_DEFAULT_DELAY);
   return bRet;
 }
 void InitializeBuffers(void)
@@ -272,8 +265,7 @@ void InitializaAllGpio(void)
 {
   pinMode(PIN_LED_FLASH, OUTPUT);
   digitalWrite(PIN_LED_FLASH, LOW);
-  pinMode(PIN_PIR_DETECT,INPUT_PULLUP);
-  attachInterrupt(PIN_PIR_DETECT,IsrPirDetect, RISING);
+  pinMode(PIN_PIR_DETECT,INPUT_PULLUP);  
 }
 bool TimerCallbackTimerNormal(void *)
 {
@@ -292,9 +284,12 @@ bool TimerCallbackTimerTimerBrust(void *)
   if(true == g_bPirDetected)
   {
     g_TakeSnapShotFlagBrust = true;
+    Serial.print("Brust mode capture : ");
+    Serial.println(nPhotoCount + 1);
     if(MAX_BRUST_PHOTO_COUNT <= nPhotoCount)
     {
       g_bPirDetected = false;
+      nPhotoCount = 0;
     }
     else
     {
@@ -304,9 +299,21 @@ bool TimerCallbackTimerTimerBrust(void *)
 
   return true;
 }
+bool checkforpirdetect(void)
+{
+  bool bRet = false;
+  static bool bPrevStatus = false;
+  int nPinStatus = digitalRead(PIN_PIR_DETECT);
+  if(nPinStatus && false == bPrevStatus)
+  {
+    g_bPirDetected = bRet = true;
+  }
+  bPrevStatus = bRet;
+}
 void setup() 
 {
   bool bErrStatus = true;
+  InitializaAllGpio();
   Serial.begin(SERIAL_BAUDRATE);
   if(false == initSDcard())
   {
@@ -369,6 +376,7 @@ void loop()
     g_nCurrWifiStatus = WL_CONNECTED;
   }
   nPrevWifiConnStstus = g_nCurrWifiStatus;
+  checkforpirdetect();
   if(true == g_TakeSnapShotFlagBrust)
   {
     SnapPhoto();
