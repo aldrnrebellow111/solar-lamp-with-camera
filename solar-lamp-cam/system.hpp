@@ -29,13 +29,13 @@
 #define DEFAULT_PASSKEY "DEFAULT PASSWORD"
 #define DEFAULT_DATE    "DD_MM_YYYY"
 #define DEFAULT_TIME    "HH_MM_SS"
-#define DEFAULT_CONN_DATA_FILE_VALUES "{\"SSID\":\"ssid\",\"Password\":\"pass\",\"ContinousPicEnable\":\"1\",\"ContinousPicintervel\":\"10\"}"
+#define DEFAULT_CONN_DATA_FILE_VALUES "{\"SSID\":\"ssid\",\"Password\":\"pass\",\"ContinousPicEnable\":\"1\",\"ContinousPicintervel\":\"30\"}"
 
-#define CAMERA_DEFAULT_DELAY      500//MS
-#define MAX_BRUST_PHOTO_COUNT     3//Number of photos
+#define CAMERA_DEFAULT_DELAY      350//MS
+#define MAX_BRUST_PHOTO_COUNT     2//Number of photos
 #define NORMAL_PHOTO_TIME_WIDTH   30// seconds
-#define NORMAL_TIMER_WIDTHIN_mSEC (1 * 1000)
-#define BRUST_TIMER_WIDTHIN_mSEC  (2 * 1000)
+#define NORMAL_TIMER_WIDTHIN_mSEC (1 * 1000)//time intervel of normal capture timer in milliseconds
+#define BRUST_TIMER_WIDTHIN_mSEC  (2 * 1000)//time intervel of brust capture timer in milliseconds
 
 #define PIN_LED_FLASH  4
 #define PIN_PIR_DETECT 16
